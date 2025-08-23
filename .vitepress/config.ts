@@ -31,7 +31,7 @@ export default defineConfig({
     ["meta", { name: "og:type", content: "website" }],
     ["meta", { name: "og:locale", content: "en" }],
     ["meta", { name: "og:site_name", content: "Stockfish Documentation" }],
-    ["link", { rel: "icon", href: "https://official-stockfish.github.io/docs/images/icon_128x128.png" }],
+    ["meta", { name: "og:image", content: "https://official-stockfish.github.io/docs/images/icon_128x128.png" }],
   ],
 
   themeConfig: {
