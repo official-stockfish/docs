@@ -4,7 +4,7 @@ import { getSidebar } from "vitepress-plugin-auto-sidebar";
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Stockfish Docs",
-  description: "Stockfish Documentation",
+  description: "Documentation, technical details, and frequent questions.",
   markdown: {
     languageAlias: {
       cuda: "c++",
@@ -23,18 +23,19 @@ export default defineConfig({
       "link",
       {
         rel: "icon",
-        type: "image/png",
-        href: "/stockfish-docs/images/logo/favicon.png",
+        type: "image/x-icon",
+        href: "/docs/images/favicon.ico",
       },
     ],
+    ['meta', { name: 'theme-color', content: '#2b6e44' }],
     ["meta", { name: "og:type", content: "website" }],
     ["meta", { name: "og:locale", content: "en" }],
-    ["meta", { name: "og:site_name", content: "Stockfish documentation" }],
-    ["link", { rel: "icon", href: "/docs/favicon.ico" }],
+    ["meta", { name: "og:site_name", content: "Stockfish Documentation" }],
+    ["link", { rel: "icon", href: "https://official-stockfish.github.io/docs/images/icon_128x128.png" }],
   ],
 
   themeConfig: {
-    logo: { src: "/images/logo/icon_128x128.png" },
+    logo: { src: "/images/icon_128x128@2x.webp" },
 
     search: {
       provider: "local",
@@ -43,6 +44,7 @@ export default defineConfig({
     nav: [
       { text: "Home", link: "/" },
       { text: "Docs", link: "/stockfish-wiki/Home" },
+      { text: "Main Site", link: "https://stockfishchess.org/" },
       {
         text: "Fishtest",
         link: "https://tests.stockfishchess.org/",

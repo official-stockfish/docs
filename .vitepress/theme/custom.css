@@ -40,3 +40,13 @@
     --vp-home-hero-image-filter: blur(68px);
   }
 }
+
+.image-bg {
+  background: linear-gradient(45deg, var(--green7) 0%, var(--green7) 100%) top left,
+              linear-gradient(-45deg, var(--green1) 0%, var(--green1) 100%) top right,
+              linear-gradient(-135deg, var(--green4) 0%, var(--green4) 100%) bottom right,
+              linear-gradient(135deg, var(--green1) 0%, var(--green1) 100%) bottom left  !important;
+  background-size: 50% 50% !important;
+  background-repeat: no-repeat !important;
+  border-radius: 25% !important;
+}
