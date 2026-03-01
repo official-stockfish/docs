@@ -9,6 +9,6 @@
     "docs:preview": "vitepress preview ."
   },
   "dependencies": {
-    "vitepress-plugin-auto-sidebar": "^1.1.0"
+    "vitepress-plugin-auto-sidebar": "1.2.0"
   }
 }
