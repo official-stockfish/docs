@@ -31,6 +31,7 @@ export default defineConfig({
         href: "/docs/images/favicon.ico",
       },
     ],
+    ["meta", { name: "google-site-verification", content: "BUbhUeIYVA6S3tlQb5MR8T65ovPoDAdCElz1USVbKRE" }],
     ['meta', { name: 'theme-color', content: '#2b6e44' }],
     ["meta", { name: "og:type", content: "website" }],
     ["meta", { name: "og:locale", content: "en" }],
