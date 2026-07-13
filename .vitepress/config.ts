@@ -14,11 +14,11 @@ export default defineConfig({
 
   ignoreDeadLinks: true,
 
-  lastUpdated: true,
+  lastUpdated: false,
 
   sitemap: {
     hostname: 'https://official-stockfish.github.io/docs/',
-    lastmodDateOnly: true
+    lastmodDateOnly: false
   },
 
   // cleanUrls: true,
