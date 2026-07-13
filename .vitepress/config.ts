@@ -16,6 +16,10 @@ export default defineConfig({
 
   lastUpdated: true,
 
+  sitemap: {
+    hostname: 'https://official-stockfish.github.io/docs/'
+  },
+
   // cleanUrls: true,
 
   head: [
