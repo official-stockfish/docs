@@ -30,11 +30,12 @@ jobs:
           cache: npm
 
       - name: Restore remote image cache
-        uses: actions/cache@v6
+        uses: actions/cache/restore@v6
         with:
           path: public/images/external
-          key: remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}
+          key: remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
+            remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}-
             remote-images-${{ runner.os }}-
 
       - name: Add outline to Markdown files
@@ -56,6 +57,11 @@ jobs:
       - run: npm ci
       - name: Build
         run: npm run docs:build:fetch-images
+      - name: Save remote image cache
+        uses: actions/cache/save@v6
+        with:
+          path: public/images/external
+          key: remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}-${{ github.run_id }}-${{ github.run_attempt }}
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

@@ -30,17 +30,24 @@ jobs:
           cache: npm
 
       - name: Restore remote image cache
-        uses: actions/cache@v6
+        uses: actions/cache/restore@v6
         with:
           path: public/images/external
-          key: remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}
+          key: remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
+            remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}-
             remote-images-${{ runner.os }}-
 
       - run: npm ci
 
       - name: Fetch remote images
         run: npm run docs:build:fetch-images
+
+      - name: Save remote image cache
+        uses: actions/cache/save@v6
+        with:
+          path: public/images/external
+          key: remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v10
