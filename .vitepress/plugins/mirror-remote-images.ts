@@ -100,7 +100,7 @@ export function mirrorRemoteImages(
     for (const match of matches.reverse()) {
       const [fullMatch, altText, rawUrl, title] = match;
       const trimmedUrl = rawUrl.trim();
-      const localUrl = await mirrorIfRemote(trimmedUrl, idForMatch(match));
+      const localUrl = await mirrorIfRemote(trimmedUrl);
       if (!localUrl || localUrl === trimmedUrl) {
         continue;
       }
@@ -124,7 +124,7 @@ export function mirrorRemoteImages(
     let output = source;
     for (const match of matches.reverse()) {
       const [fullMatch, beforeSrc, quote, rawUrl, afterSrc] = match;
-      const localUrl = await mirrorIfRemote(rawUrl.trim(), idForMatch(match));
+      const localUrl = await mirrorIfRemote(rawUrl.trim());
       if (!localUrl || localUrl === rawUrl.trim()) {
         continue;
       }
@@ -157,7 +157,7 @@ export function mirrorRemoteImages(
         continue;
       }
 
-      const localUrl = await mirrorIfRemote(rawUrl.trim(), idForMatch(match));
+      const localUrl = await mirrorIfRemote(rawUrl.trim());
       if (!localUrl || localUrl === rawUrl.trim()) {
         continue;
       }
@@ -188,11 +188,7 @@ export function mirrorRemoteImages(
     return labels;
   }
 
-  function idForMatch(match: RegExpMatchArray) {
-    return `${match.index ?? 0}`;
-  }
-
-  async function mirrorIfRemote(url: string, sourceId: string) {
+  async function mirrorIfRemote(url: string) {
     if (!isIncluded(url)) {
       return url;
     }
@@ -204,9 +200,9 @@ export function mirrorRemoteImages(
 
     const task = (async () => {
       const target =
-        (await findExistingMirror(url, sourceId)) ??
+        (await findExistingMirror(url)) ??
         (resolved.fetchNewImages
-          ? await downloadRemoteImage(url, sourceId)
+          ? await downloadRemoteImage(url)
           : url);
       return target;
     })();
@@ -229,7 +225,7 @@ export function mirrorRemoteImages(
     );
   }
 
-  async function downloadRemoteImage(url: string, sourceId: string) {
+  async function downloadRemoteImage(url: string) {
     console.log(`[vitepress-mirror-remote-images] Downloading ${url}...`);
     const response = await fetch(url, {
       redirect: "follow",
@@ -254,7 +250,6 @@ export function mirrorRemoteImages(
 
     const relativePath = getMirrorPath(
       url,
-      sourceId,
       getExtension(url, contentType),
     );
     const absolutePath = path.join(publicDir, relativePath);
@@ -270,8 +265,8 @@ export function mirrorRemoteImages(
     return `/${relativePath}`;
   }
 
-  async function findExistingMirror(url: string, sourceId: string) {
-    for (const relativePath of getPossibleMirrorPaths(url, sourceId)) {
+  async function findExistingMirror(url: string) {
+    for (const relativePath of getPossibleMirrorPaths(url)) {
       try {
         await stat(path.join(publicDir, relativePath));
         return `/${relativePath}`;
@@ -283,21 +278,20 @@ export function mirrorRemoteImages(
     return null;
   }
 
-  function getPossibleMirrorPaths(url: string, sourceId: string) {
+  function getPossibleMirrorPaths(url: string) {
     const pathnameExtension = path.posix.extname(new URL(url).pathname);
     const extensions = pathnameExtension
       ? [pathnameExtension]
       : IMAGE_EXTENSIONS;
     return extensions.map((extension) =>
-      getMirrorPath(url, sourceId, extension),
+      getMirrorPath(url, extension),
     );
   }
 
-  function getMirrorPath(url: string, sourceId: string, extension: string) {
+  function getMirrorPath(url: string, extension: string) {
     const hash = crypto
       .createHash("sha1")
       .update(url)
-      .update(sourceId)
       .digest("hex")
       .slice(0, 10);
     const parsed = new URL(url);
