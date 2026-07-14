@@ -4,7 +4,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: update-submodules
@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          token: ${{ secrets.UPDATE_TOKEN }}
+          token: ${{ secrets.UPDATE_TOKEN || github.token }}
           ref: master
           submodules: true
           fetch-depth: 0
