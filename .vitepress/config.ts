@@ -103,7 +103,11 @@ export default defineConfig({
 
     sidebar: sortSidebarItems(getSidebar({
       contentRoot: ".",
-      contentDirs: ["stockfish-wiki", "fishtest-wiki", "nnue-pytorch-wiki"],
+      contentDirs: [
+        { path: "stockfish-wiki", title: "Stockfish" },
+        { path: "fishtest-wiki", title: "Fishtest" },
+        { path: "nnue-pytorch-wiki", title: "NNUE-Pytorch" },
+      ],
       collapsible: true,
       collapsed: false,
     }), false),
