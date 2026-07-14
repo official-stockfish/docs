@@ -17,8 +17,8 @@ export default defineConfig({
   lastUpdated: false,
 
   sitemap: {
-    hostname: 'https://official-stockfish.github.io/docs/',
-    lastmodDateOnly: false
+    hostname: "https://official-stockfish.github.io/docs/",
+    lastmodDateOnly: false,
   },
 
   // cleanUrls: true,
@@ -32,12 +32,25 @@ export default defineConfig({
         href: "/docs/images/favicon.ico",
       },
     ],
-    ["meta", { name: "google-site-verification", content: "BUbhUeIYVA6S3tlQb5MR8T65ovPoDAdCElz1USVbKRE" }],
-    ['meta', { name: 'theme-color', content: '#2b6e44' }],
+    [
+      "meta",
+      {
+        name: "google-site-verification",
+        content: "BUbhUeIYVA6S3tlQb5MR8T65ovPoDAdCElz1USVbKRE",
+      },
+    ],
+    ["meta", { name: "theme-color", content: "#2b6e44" }],
     ["meta", { name: "og:type", content: "website" }],
     ["meta", { name: "og:locale", content: "en" }],
     ["meta", { name: "og:site_name", content: "Stockfish Documentation" }],
-    ["meta", { name: "og:image", content: "https://official-stockfish.github.io/docs/images/icon_128x128.png" }],
+    [
+      "meta",
+      {
+        name: "og:image",
+        content:
+          "https://official-stockfish.github.io/docs/images/icon_128x128.png",
+      },
+    ],
   ],
 
   themeConfig: {
@@ -58,7 +71,7 @@ export default defineConfig({
     ],
 
     sidebar: getSidebar({
-      contentRoot: "/",
+      contentRoot: ".",
       contentDirs: ["stockfish-wiki", "fishtest-wiki", "nnue-pytorch-wiki"],
       collapsible: true,
       collapsed: false,
