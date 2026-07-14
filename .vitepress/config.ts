@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
 import { getSidebar } from "vitepress-plugin-auto-sidebar";
 import { mirrorRemoteImages } from "./plugins/mirror-remote-images";
+import { transformImagesToWebp } from "./plugins/transform-images-to-webp";
 
 const fetchRemoteImages = process.argv.includes("--fetch-remote-images");
 
@@ -51,7 +52,7 @@ export default defineConfig({
       {
         name: "og:image",
         content:
-          "https://official-stockfish.github.io/docs/images/icon_128x128.png",
+          "https://official-stockfish.github.io/docs/images/icon_128x128.webp",
       },
     ],
   ],
@@ -95,6 +96,7 @@ export default defineConfig({
       },
     ],
   },
+  buildEnd: transformImagesToWebp(),
   vite: {
     plugins: [mirrorRemoteImages({ fetchNewImages: fetchRemoteImages })],
   },
