@@ -29,6 +29,14 @@ jobs:
           node-version: latest
           cache: npm
 
+      - name: Restore remote image cache
+        uses: actions/cache@v6
+        with:
+          path: public/images/external
+          key: remote-images-${{ runner.os }}-${{ hashFiles('stockfish-wiki/**/*.md', 'fishtest-wiki/**/*.md', 'nnue-pytorch-wiki/**/*.md', 'index.md', 'README.md') }}
+          restore-keys: |
+            remote-images-${{ runner.os }}-
+
       - run: npm ci
 
       - name: Fetch remote images
@@ -37,7 +45,7 @@ jobs:
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v10
         with:
-          add: stockfish-wiki nnue-pytorch-wiki fishtest-wiki public/images/external
+          add: stockfish-wiki nnue-pytorch-wiki fishtest-wiki
           default_author: github_actions
           message: Update wiki submodules
           push: origin HEAD:master
