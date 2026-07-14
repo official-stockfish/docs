@@ -1,9 +1,11 @@
 import { defineConfig } from "vitepress";
 import { getSidebar } from "vitepress-plugin-auto-sidebar";
+import { addImageDimensions } from "./plugins/add-image-dimensions";
 import { mirrorRemoteImages } from "./plugins/mirror-remote-images";
 import { transformImagesToWebp } from "./plugins/transform-images-to-webp";
 
 const fetchRemoteImages = process.argv.includes("--fetch-remote-images");
+const transformImagesToWebpBuildEnd = transformImagesToWebp();
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -12,6 +14,9 @@ export default defineConfig({
   markdown: {
     languageAlias: {
       cuda: "c++",
+    },
+    config(md) {
+      md.use(addImageDimensions);
     },
   },
   base: "/docs/",
@@ -96,7 +101,7 @@ export default defineConfig({
       },
     ],
   },
-  buildEnd: transformImagesToWebp(),
+  buildEnd: transformImagesToWebpBuildEnd,
   vite: {
     plugins: [mirrorRemoteImages({ fetchNewImages: fetchRemoteImages })],
   },
