@@ -1,5 +1,8 @@
 import { defineConfig } from "vitepress";
 import { getSidebar } from "vitepress-plugin-auto-sidebar";
+import { mirrorRemoteImages } from "./plugins/mirror-remote-images";
+
+const fetchRemoteImages = process.argv.includes("--fetch-remote-images");
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -92,5 +95,7 @@ export default defineConfig({
       },
     ],
   },
-  vite: {},
+  vite: {
+    plugins: [mirrorRemoteImages({ fetchNewImages: fetchRemoteImages })],
+  },
 });

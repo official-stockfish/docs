@@ -6,6 +6,7 @@
   "scripts": {
     "docs:dev": "vitepress dev .",
     "docs:build": "vitepress build .",
+    "docs:build:fetch-images": "vitepress build . --fetch-remote-images",
     "docs:preview": "vitepress preview ."
   },
   "dependencies": {
