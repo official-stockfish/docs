@@ -1,4 +1,4 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, type DefaultTheme } from "vitepress";
 import { getSidebar } from "vitepress-plugin-auto-sidebar";
 import { addImageDimensions } from "./plugins/add-image-dimensions";
 import { mirrorRemoteImages } from "./plugins/mirror-remote-images";
@@ -6,6 +6,28 @@ import { transformImagesToWebp } from "./plugins/transform-images-to-webp";
 
 const fetchRemoteImages = process.argv.includes("--fetch-remote-images");
 const transformImagesToWebpBuildEnd = transformImagesToWebp();
+
+const sortSidebarItems = (
+  items: DefaultTheme.SidebarItem[],
+  sortCurrentLevel = true,
+): DefaultTheme.SidebarItem[] =>
+  {
+    const sortedChildren = items.map((item) => ({
+      ...item,
+      items: item.items ? sortSidebarItems(item.items) : undefined,
+    }));
+
+    if (!sortCurrentLevel) return sortedChildren;
+
+    return sortedChildren.sort((a, b) => {
+      const aIsHome = a.text.toLowerCase() === "home";
+      const bIsHome = b.text.toLowerCase() === "home";
+
+      if (aIsHome || bIsHome) return aIsHome ? -1 : 1;
+
+      return a.text.localeCompare(b.text, undefined, { sensitivity: "base" });
+    });
+  };
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -79,12 +101,12 @@ export default defineConfig({
       },
     ],
 
-    sidebar: getSidebar({
+    sidebar: sortSidebarItems(getSidebar({
       contentRoot: ".",
       contentDirs: ["stockfish-wiki", "fishtest-wiki", "nnue-pytorch-wiki"],
       collapsible: true,
       collapsed: false,
-    }),
+    }), false),
 
     socialLinks: [
       {
