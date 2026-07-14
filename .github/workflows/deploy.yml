@@ -18,9 +18,9 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: latest
           cache: npm
 
       - name: Add outline to Markdown files
