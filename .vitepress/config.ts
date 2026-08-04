@@ -59,8 +59,18 @@ export default defineConfig({
       "link",
       {
         rel: "icon",
-        type: "image/x-icon",
-        href: "/docs/images/favicon.ico",
+        type: "image/png",
+        sizes: "16x16",
+        href: "/docs/images/favicon.png",
+      },
+    ],
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/docs/images/favicon.png",
       },
     ],
     [
